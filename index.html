@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tasker</title>
+    <title>Tasker</title>  
 
     <link rel="manifest" href="manifest.json" />
     <link
@@ -17,12 +17,51 @@
     <link rel="stylesheet" href="./assets/css/styles.css" />
     <meta name="theme-color" content="#fff4d6" />
     <script src="https://cdn.jsdelivr.net/npm/drag-drop-touch@1.3.1/DragDropTouch.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script type="text/javascript" src="./assets/js/app.js" defer></script>
     <link
       rel="icon"
       href="https://cdn.glitch.global/9c0b2f9f-e9ee-41fc-8a1b-c4d4c4372c53/512.png?v=1713761861720"
       type="image/x-icon"
     />
+
+    <template id="task-list__item--template">
+      <div class="task-list__item btn-group">
+        <button class="btn task-btn" draggable="true" ondragstart="drag(event)">
+          :::
+        </button>
+        
+
+        <div class="task-list__textarea-container">
+          <textarea
+            rows="4"
+            data-gramm="false"
+            class="form-control task-list__textarea"
+          ></textarea>
+          <nav class="task-list__nav">
+            <button
+              class="btn btn-palette btn--small"
+              style="background-color: transparent; box-shadow: none"
+            >
+              <span class="material-symbols-outlined" style="font-size: 16px">
+                palette
+              </span>
+            </button>
+
+            <button
+              class="btn btn-notifications btn--small"
+              style="background-color: transparent; box-shadow: none"
+            >
+              <span class="material-symbols-outlined" style="font-size: 16px">
+                notifications
+              </span>
+            </button>
+          </nav>
+        </div>
+
+        <button class="btn task-btn close-btn">✕</button>
+      </div>
+    </template>
   </head>
   <body>
     <div
@@ -32,6 +71,40 @@
       data-your_own_param_1_to_login="any_value"
       data-your_own_param_2_to_login="any_value"
     ></div>
+
+    <ul
+      class="popover" id="note-color" hidden
+    >
+      <li style="">
+        <input class="note-color note-color--yellow" type="radio" id="note-color--yellow" name="note-color" value="yellow" hidden checked="true">
+        <label for="note-color--yellow"></label>
+      </li>
+      
+      <li style="">
+        <input class="note-color note-color--red" type="radio" id="note-color--red" name="note-color" value="red" hidden>
+        <label for="note-color--red"></label>
+      </li>
+      
+      <li style="">
+        <input class="note-color note-color--blue" type="radio" id="note-color--blue" name="note-color" value="blue" hidden>
+        <label for="note-color--blue"></label>
+      </li>
+    </ul>
+    
+    <ul
+      class="popover" id="reminder-popover" hidden style="flex-direction: column;"
+    >
+<!--       <li style="">
+        Due date:
+        <input type="date" />
+      </li>
+      
+      <li style="">
+        Remind me at:
+        <input type="time" />
+      </li> -->
+
+    </ul>
 
     <div
       class="wrapper"
@@ -60,7 +133,7 @@
       >
         <span class="task-list-title">In Progress</span>
 
-        <ul class="task-list" id="in-progress-list"></ul>
+        <ul class="task-list" id="doing-list"></ul>
       </div>
 
       <div
@@ -70,7 +143,7 @@
       >
         <span class="task-list-title">Closed</span>
 
-        <ul class="task-list" id="closed-list"></ul>
+        <ul class="task-list" id="done-list"></ul>
       </div>
     </div>
 
@@ -81,7 +154,6 @@
           justify-content: space-between;
           align-items: center;
           padding-bottom: 0.5rem;
-          border-bottom: solid 1px #b2b2b2;
         "
       >
         <span
@@ -91,16 +163,24 @@
         <button class="btn" id="close-dialog">✕ Cancel</button>
       </nav>
 
+      <hr />
+
       <form id="settings-form" method="dialog">
-        <p style="color: red; font-weight: bold;">
-          Website will be <a target="_blank" href="https://tasker-drag-drop-staging.glitch.me/">updating</a>
- on March 31, 2025 @ 5PM CST. Todos may not be
-          saved. We apologize for the inconveniece.
-        </p>
+        <div
+          class="alert alert-info"
+          style="
+            padding: 0.75rem 1rem;
+            background-color: #9ce2ff;
+            color: #276f8c;
+            border-radius: 0.5rem;
+          "
+        >
+          Welcome to the new and improved Tasker!
+        </div>
 
         <div class="form-group">
           <label for="auto-delete">Autodelete Closed Todos:</label>
-          <select name="auto-delete" id="auto-delete" disabled>
+          <select name="auto-delete" id="auto-delete">
             <option value="never">Never</option>
             <option value="one_day">After 1 Day</option>
             <option value="three_days">After 3 Days</option>
@@ -110,9 +190,17 @@
 
         <div class="form-group">
           <label for="auto-delete">Enable notifications:</label>
-          <input type="checkbox" disabled />
+          <input type="checkbox" />
         </div>
       </form>
+      <hr />
+      <footer style="display: flex
+;
+    gap: 0.5rem;">
+        <a class="btn" href="/report.html" target="_blank">Report a bug</a>
+        <a class="btn" href="/feature.html" target="_blank">Request a feature</a>
+        
+      </footer>
     </dialog>
   </body>
 </html>
