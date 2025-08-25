@@ -1,0 +1,12 @@
+{
+  "name": "Tasker",
+  "icons": [
+    {
+      "src": "https://cdn.glitch.global/9c0b2f9f-e9ee-41fc-8a1b-c4d4c4372c53/512.png?v=1713761861720",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone"
+}
